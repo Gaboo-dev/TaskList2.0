@@ -51,18 +51,26 @@ h1{
     outline: none;
     border: 1px solid var(--color-secondary);
 }
-#button{
+#button, #taskDeleter{
     background-color: var(--color-background);
     min-height: 5vh;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px;
     border: none;
+    margin-left: 10px;
+    margin-right: 10px;
    
 }
 #button:hover{
     background-color: #522AEB;
    
+}
+#taskDeleter{
+    background-color: var(--color-text);
+}
+#taskDeleter:hover{
+    background-color: #eb2a6a;
 }
 
 
