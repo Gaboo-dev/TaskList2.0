@@ -72,6 +72,9 @@ h1{
 #taskDeleter:hover{
     background-color: #eb2a6a;
 }
+li{
+    list-style: none;
+}
 
 
 
