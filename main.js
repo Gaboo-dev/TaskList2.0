@@ -17,12 +17,13 @@ $$ = selector => document.querySelectorAll(selector)
 
 //VARIABLES - OBJ - DomComponents
 localStorage.setItem("taskID", 0)
+
 //DomComponents
 let $input = $(`#input`)
 let $button = $(`#button`)
-let $taskList = $(`ul`)
 let $taskDeleter = $(`#taskDeleter`)
 let $$tasks = $$(".task")
+
 
 
 //Variables
@@ -69,10 +70,10 @@ const TasksInfo = {
 }
 
 // EVENTHANDLERS
+
 document.addEventListener("DOMContentLoaded", cargarTareas)
 $button.addEventListener("click", agregarTarea)
 $taskDeleter.addEventListener("click", borrarTareas)
-
 
 //FUNCTIONS
 //crea la tarea
@@ -96,9 +97,9 @@ cargarTareas()
 //cargar tarea la tarea
 function cargarTareas(){
     let tasks = []
-    for (i = 0; i < localStorage.length; i++ ){
+    for (s = 0; s < localStorage.length; s++ ){
         
-       let keyTask = localStorage.key(i)
+       let keyTask = localStorage.key(s)
        let valueTask = localStorage.getItem(keyTask)
        if (valueTask.includes(TasksInfo.taskTester)){
         let task= JSON.parse(valueTask)
@@ -107,58 +108,48 @@ function cargarTareas(){
        }
        
     }
+    console.log("se cargo")
     return renderizarTareas(tasks)
 }
+
+
+//renderizar las tareas cargadas por cargarTarea()
+function renderizarTareas(tasks) {
+    const tasksContainer = $('#tasks-container'); // Elemento en tu HTML
+    tasksContainer.innerHTML = ''; // Limpiar contenedor
+  
+    for (let i = 0; i < tasks.length; i++) { // 'let' para evitar reasignaciones
+      const task = tasks[i];
+      
+      // Crear elementos
+      const taskContainer = document.createElement("div");
+      const taskName = document.createElement("h2");
+      const taskMenu = document.createElement("button");
+  
+      // Configurar elementos
+      taskName.textContent = task.name;
+      taskName.style.color = task.color;
+      taskName.contentEditable = true; // Usar propiedades en lugar de isContentEditable
+      
+      taskMenu.className = "taskMenu";
+      taskMenu.textContent = "settings";
+  
+      taskContainer.id = task.id;
+      taskContainer.classList.add("task"); // Añadir clase para la NodeList
+      taskContainer.appendChild(taskName);
+      taskContainer.appendChild(taskMenu);
+  
+      tasksContainer.appendChild(taskContainer); // Agregar al DOM
+    }
+    console.log(localStorage)
+  
+
+  }
+    
+
 //borrar tareas de el localstorage
 function borrarTareas(){
     localStorage.clear()
     cargarTareas()
 }
-//renderizar las tareas cargadas por cargarTarea()
-function renderizarTareas(tasks){
-      tasks.forEach(task => {
-        //por cada tarea voy a crear un contenedor, un titulo y un menu
-        let taskContainer = document.createElement("div")
-        let taskName = document.createElement("h2")
-        let taskMenu = document.createElement("button")
-
-        // configuracion de el menu
-        taskMenu.classname = "taskMenu"
-        taskMenu.textContent = "settings"
-
-
-        //configuracion de el nombre 
-        taskName.textContent = task.name
-        taskName.style = `color: ${task.color}`
-        taskName.isContentEditable = true
-
-
-        //configuracion de el contenedor
-        taskContainer.id = task.id
-        taskContainer.append(taskName)
-        taskContainer.append(taskMenu)
-        whatIdIs(task)
-
-      });
-}
-function whatIdIs(task){
-    if (task.id = 0) {
-        console.log(
-            $$tasks
-        )
-    }
-    if (task.id = 1) {
-        console.log($$tasks)
-    }
-    if (task.id = 2) {
-        console.log($$tasks)
-    }
-    if (task.id = 3) {
-        console.log($$tasks)
-    }
-
-}
-
-
-
 
