@@ -103,10 +103,8 @@ function cargarTareas(){
        if (valueTask.includes(TasksInfo.taskTester)){
         let task= JSON.parse(valueTask)
         tasks.push(task)
-
-       }
-       else{
-        localStorage.setItem("taskID", 0)
+        taskID++
+        localStorage.setItem("taskID", taskID)
        }
        
     }
