@@ -79,8 +79,8 @@ $taskDeleter.addEventListener("click", borrarTareas)
 //crea la tarea
 function agregarTarea(){
     //no sobrepase el limite de tareas ni permita tareas en blanco
-if ($input.value == "" || TasksInfo.taskLimit <=taskID) return
-
+    if ($input.value == "" || TasksInfo.taskLimit <=taskID) return
+    
     //definir taskID
     taskID = localStorage.getItem("taskID")
     //comprobar si taskID es null
@@ -120,24 +120,120 @@ function renderizarTareas(tasks) {
   
     for (let i = 0; i < tasks.length; i++) { // 'let' para evitar reasignaciones
       const task = tasks[i];
+        
+        //comprobar si una tarea ya esta completada
+        if (task.isTask == true) {
+            localStorage.removeItem(`task#${task.id}`)
+            continue
+        }
+        // Crear elementos
+        const taskContainer = document.createElement("div");
+        const Checkbox = document.createElement("button")
+        const taskName = document.createElement("h2");
+        const taskMenu = document.createElement("button");
+        const TaskIcon = document.createElement("span")
+        const ModalMenu = document.createElement("dialog")
+        
+        // Configurar elementos
+        taskName.textContent = task.name;
+        taskName.style.color = task.color;
+        taskName.contentEditable = true; // Usar propiedades en lugar de isContentEditable
       
-      // Crear elementos
-      const taskContainer = document.createElement("div");
-      const taskName = document.createElement("h2");
-      const taskMenu = document.createElement("button");
-  
-      // Configurar elementos
-      taskName.textContent = task.name;
-      taskName.style.color = task.color;
-      taskName.contentEditable = true; // Usar propiedades en lugar de isContentEditable
+        taskMenu.className = "taskMenu";
+        taskMenu.textContent = "settings";
+        taskMenu.id = `settings ${task.id}`
+
+        //configuracion checkbox
+        Checkbox.className = "checkbox"
+        Checkbox.id = `checkbox ${task.id}`
+        Checkbox.textContent = "terminar tarea✅"
+        Checkbox.addEventListener("click", (e) => {
+            if (task.isTask == null) {
+                task.isTask = true
+                Checkbox.className = "checkbox checked"
+                taskContainer.classList.add("checked")
+                localStorage.setItem(`task#${task.id}`, JSON.stringify(task))
+            } else {
+                task.isTask = null
+                Checkbox.className = "checkbox"
+                taskContainer.classList.remove("checked")
+                localStorage.setItem(`task#${task.id}`, JSON.stringify(task))
+            }
+            })
+
+
+
+
+      //configurar modal de settings
+        ModalMenu.className = "modal"
+        ModalMenu.id = `modal ${task.id}`
+        ModalMenu.setAttribute("closedby", "any")
+        ModalMenu.removeAttribute("open")
+
+        taskMenu.addEventListener("click", (e) => {
+          if (ModalMenu.hasAttribute("open")) {
+
+            ModalMenu.removeAttribute("open")
+          }
+          else {
+            ModalMenu.showModal()
+            ModalMenu.setAttribute("open", "true")
+          }
+        })
+
+
+
+        //objetos dentro del modal
+        const DeleteButton = document.createElement("button")
+        DeleteButton.textContent = "Eliminar tarea"
+        DeleteButton.className = "deleteButton"
+        DeleteButton.id = `delete ${task.id}`
+        //eliminar tareas del localstorage y de la vista
+        DeleteButton.addEventListener("click", (e) => {
+            localStorage.removeItem(`task#${task.id}`)
+            cargarTareas()
+            })
+        ModalMenu.appendChild(DeleteButton)
+
+
+
+
+
+        const ColorPicker = document.createElement("input")
+        ColorPicker.type = "color"
+
+        ColorPicker.addEventListener("change", (e) => {
+          taskName.style.color = e.target.value
+          task.color = e.target.value
+          localStorage.setItem(`task#${task.id}`, JSON.stringify(task))
+        })
+
+        ModalMenu.appendChild(ColorPicker)
+
+        //detectar cambios en el input de texto
+        taskName.addEventListener("input", (e) => {
+            task.name = e.target.textContent
+            localStorage.setItem(`task#${task.id}`, JSON.stringify(task))
+        })
+        //añadir el icono de la tarea
+        TaskIcon.className = "taskIcon"
+        TaskIcon.textContent = "📝"
+
+        
+       
+        
+        
+        
       
-      taskMenu.className = "taskMenu";
-      taskMenu.textContent = "settings";
+
   
-      taskContainer.id = task.id;
-      taskContainer.classList.add("task"); // Añadir clase para la NodeList
-      taskContainer.appendChild(taskName);
-      taskContainer.appendChild(taskMenu);
+    taskContainer.id = task.id;
+    taskContainer.classList.add("task"); // Añadir clase para la NodeList
+    taskContainer.appendChild(TaskIcon)
+    taskContainer.appendChild(taskName);
+    taskContainer.appendChild(taskMenu);
+    taskContainer.appendChild(Checkbox)
+    taskContainer.appendChild(ModalMenu)
   
       tasksContainer.appendChild(taskContainer); // Agregar al DOM
     }
@@ -145,6 +241,7 @@ function renderizarTareas(tasks) {
   
 
   }
+
     
 
 //borrar tareas de el localstorage
