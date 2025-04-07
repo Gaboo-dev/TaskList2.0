@@ -15,7 +15,7 @@ $$ = selector => document.querySelectorAll(selector)
 
 
 //VARIABLES - OBJ - DomComponents
-localStorage.setItem("taskID", 0)
+
 
 //DomComponents
 let $input = $(`#input`)
@@ -103,8 +103,8 @@ function cargarTareas(){
        if (valueTask.includes(TasksInfo.taskTester)){
         let task= JSON.parse(valueTask)
         tasks.push(task)
-        taskID++
-        localStorage.setItem("taskID", taskID)
+        
+        
        }
        
     }
@@ -119,6 +119,7 @@ function renderizarTareas(tasks) {
     tasksContainer.innerHTML = ''; // Limpiar contenedor
   
     for (let i = 0; i < tasks.length; i++) { // 'let' para evitar reasignaciones
+      if (tasks.length == 1 ){localStorage.setItem("taskID", 1)}
       const task = tasks[i];
         
         //comprobar si una tarea ya esta completada
@@ -239,6 +240,7 @@ function renderizarTareas(tasks) {
     taskContainer.appendChild(ModalMenu)
   
       tasksContainer.appendChild(taskContainer); // Agregar al DOM
+      
     }
     
   
