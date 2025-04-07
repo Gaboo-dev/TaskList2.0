@@ -140,13 +140,13 @@ function renderizarTareas(tasks) {
         taskName.contentEditable = true; // Usar propiedades en lugar de isContentEditable
       
         taskMenu.className = "taskMenu";
-        taskMenu.textContent = "settings";
+        taskMenu.innerHTML = `<img src = "assets/icons/settings.svg"></img>`; // Icono de configuración
         taskMenu.id = `settings ${task.id}`
 
         //configuracion checkbox
         Checkbox.className = "checkbox"
         Checkbox.id = `checkbox ${task.id}`
-        Checkbox.textContent = "terminar tarea✅"
+        Checkbox.innerHTML = `<span id = "checkbox">✅</span>`
         Checkbox.addEventListener("click", (e) => {
             if (task.isTask == null) {
                 task.isTask = true
@@ -165,6 +165,7 @@ function renderizarTareas(tasks) {
 
 
       //configurar modal de settings
+        ModalMenu.innerHTML = `<p class = "dialogTittle">Configuracion de tarea</p>`
         ModalMenu.className = "modal"
         ModalMenu.id = `modal ${task.id}`
         ModalMenu.setAttribute("closedby", "any")
@@ -185,7 +186,7 @@ function renderizarTareas(tasks) {
 
         //objetos dentro del modal
         const DeleteButton = document.createElement("button")
-        DeleteButton.textContent = "Eliminar tarea"
+        DeleteButton.textContent = "eliminar tarea❌"
         DeleteButton.className = "deleteButton"
         DeleteButton.id = `delete ${task.id}`
         //eliminar tareas del localstorage y de la vista
@@ -201,6 +202,8 @@ function renderizarTareas(tasks) {
 
         const ColorPicker = document.createElement("input")
         ColorPicker.type = "color"
+        ColorPicker.id = `colorPicker ${task.id}`
+        ColorPicker.classList.add("colorPicker")
 
         ColorPicker.addEventListener("change", (e) => {
           taskName.style.color = e.target.value

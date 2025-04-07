@@ -75,7 +75,110 @@ h1{
 #tasks-container{
     width: 100%;
 }
-
+.task{
+    margin-top: 2vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: var(--color-background);
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: white;
+}
+img{
+    margin: auto;
+    width: 25px;
+    height: 25px;
+    
+}
+.taskMenu{
+padding: 0px;
+margin: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-style: none;
+    background-color: rgba(0, 0, 0, 0);
+    margin-left: auto;
+    margin-right: 5px;
+}
+img:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+.checked{
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    text-decoration: line-through;
+}
+.checkbox{
+    padding: 0px;
+margin: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-style: none;
+    background-color: rgba(0, 0, 0, 0);
+    margin-left: 5px;
+    margin-right: 5px;
+}
+span{
+    font-size: 25px;
+}
+.checkbox:hover{
+    cursor: pointer;
+    transform: scale(1.2);
+}
+dialog{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    border-radius: 10px;
+    z-index: 10;
+    padding-bottom: 20px;
+    
+    overflow: hidden;
+}
+.dialogTittle{
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 10px;
+    margin-inline: 10%;
+    
+}
+.deleteButton{
+    background-color: rgba(0, 0, 0, 0);
+   
+    border-radius: 10px;
+    height: 5vh;
+    border: none;
+    padding: 5px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    width: 80%;
+    margin-inline: 10%;
+}
+.deleteButton:hover{
+    background-color: var(--color-text);
+    color: white;
+}
+.colorPicker{
+    width: 80%;
+    height: 5vh;
+    border-radius: 5px;
+    border: 1px solid var(--color-primary);
+    margin-bottom: 15px;
+    font-size: 1rem;
+    text-align:center;
+    margin-inline: 10%;
+}
 
 
 
