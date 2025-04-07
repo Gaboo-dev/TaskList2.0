@@ -108,7 +108,7 @@ function cargarTareas(){
        }
        
     }
-    console.log("se cargo")
+    
     return renderizarTareas(tasks)
 }
 
@@ -240,7 +240,7 @@ function renderizarTareas(tasks) {
   
       tasksContainer.appendChild(taskContainer); // Agregar al DOM
     }
-    console.log(localStorage)
+    
   
 
   }
