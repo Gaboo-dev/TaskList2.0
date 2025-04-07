@@ -1,7 +1,6 @@
 /* Primer proyecto "bien hecho"
 
--   hay un monton de funcionalidades hechas a las prisas que generar una cantidad considerable de deuda tecnica
-    pero ya que es un proyecto pequeño no importa mucho.
+- 
 -   
 
 
@@ -105,6 +104,9 @@ function cargarTareas(){
         let task= JSON.parse(valueTask)
         tasks.push(task)
 
+       }
+       else{
+        localStorage.setItem("taskID", 0)
        }
        
     }
