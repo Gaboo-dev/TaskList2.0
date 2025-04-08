@@ -96,19 +96,24 @@ cargarTareas()
 }
 //cargar tarea la tarea
 function cargarTareas(){
+  
     let tasks = []
     for (s = 0; s < localStorage.length; s++ ){
-        
+        //arreglar el bug del check de las tareas
+      
+       
+      
        let keyTask = localStorage.key(s)
        let valueTask = localStorage.getItem(keyTask)
-       if (valueTask.includes(TasksInfo.taskTester)){
+       if (valueTask.includes(TasksInfo.taskTester) && valueTask.includes("null")) {
         let task= JSON.parse(valueTask)
         tasks.push(task)
-
+        console.log(tasks)
        }
-       
-    }
-    taskID = tasks.length
+      }
+    
+    console.log(tasks)
+    taskID = tasks.length + 1
     localStorage.setItem("taskID", taskID)
     console.log("se cargo")
     return renderizarTareas(tasks)
@@ -161,6 +166,7 @@ function renderizarTareas(tasks) {
                 taskContainer.classList.remove("checked")
                 localStorage.setItem(`task#${task.id}`, JSON.stringify(task))
             }
+
             })
 
 
