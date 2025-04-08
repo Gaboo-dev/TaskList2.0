@@ -108,6 +108,8 @@ function cargarTareas(){
        }
        
     }
+    taskID = tasks.length
+    localStorage.setItem("taskID", taskID)
     console.log("se cargo")
     return renderizarTareas(tasks)
 }
