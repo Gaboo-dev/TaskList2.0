@@ -12,7 +12,7 @@
 
 $ = selector => document.querySelector(selector)
 $$ = selector => document.querySelectorAll(selector)
-
+localStorage.setItem("taskID", 0)
 
 //VARIABLES - OBJ - DomComponents
 
@@ -25,8 +25,7 @@ let $$tasks = $$(".task")
 
 
 
-//Variables
-taskID = localStorage.getItem("taskID")
+
 
 //clases
 class NewTask{
@@ -77,21 +76,25 @@ $taskDeleter.addEventListener("click", borrarTareas)
 //FUNCTIONS
 //crea la tarea
 function agregarTarea(){
+    //comprobar si el localstorage tiene tareas
+    if (taskID == null || taskID == undefined) {localStorage.setItem("taskID", 0)} 
+    taskID = localStorage.getItem("taskID")
     //no sobrepase el limite de tareas ni permita tareas en blanco
     if ($input.value == "" || TasksInfo.taskLimit <=taskID) return
     
     //definir taskID
-    taskID = localStorage.getItem("taskID")
+   
     //comprobar si taskID es null
-    if (taskID == null) {taskID = 0} 
+    
     //crea un objeto tarea para cada una 
     const infTask = new NewTask(taskID, $input.value )
     //subir informacion de la tarea a la base de datos 
     localStorage.setItem(`task#${taskID}`, JSON.stringify(infTask))
     taskID++
+    
     localStorage.setItem("taskID", taskID)
 
-cargarTareas()
+    return cargarTareas()
 }
 //cargar tarea la tarea
 function cargarTareas(){
@@ -108,15 +111,15 @@ function cargarTareas(){
        }
        
     }
-    
+    console.log("se cargon las tareas")
     return renderizarTareas(tasks)
 }
 
 
 //renderizar las tareas cargadas por cargarTarea()
 function renderizarTareas(tasks) {
-    const tasksContainer = $('#tasks-container'); // Elemento en tu HTML
-    tasksContainer.innerHTML = ''; // Limpiar contenedor
+    const tasksContainer = $(`#tasks-container`)
+    tasksContainer.innerHTML = ""; // Limpiar el contenedor antes de agregar nuevas tareas
   
     for (let i = 0; i < tasks.length; i++) { // 'let' para evitar reasignaciones
       if (tasks.length == 1 ){localStorage.setItem("taskID", 1)}
@@ -239,7 +242,8 @@ function renderizarTareas(tasks) {
     taskContainer.appendChild(Checkbox)
     taskContainer.appendChild(ModalMenu)
   
-      tasksContainer.appendChild(taskContainer); // Agregar al DOM
+      tasksContainer.appendChild(taskContainer); 
+      
       
     }
     
